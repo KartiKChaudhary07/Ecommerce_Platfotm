@@ -1,0 +1,11 @@
+.main-content {
+  min-height: calc(100vh - 160px);
+  padding-bottom: 4rem;
+}
+
+.footer {
+  padding: 4rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}

@@ -1,0 +1,51 @@
+<div class="container cart-container">
+  <h1>Your Shopping <span class="gradient-text">Cart</span></h1>
+
+  <div *ngIf="loading" class="loading">Loading cart...</div>
+
+  <div *ngIf="!loading && cartItems.length === 0" class="empty-cart card glass">
+    <p>Your cart is empty.</p>
+    <a routerLink="/" class="btn btn-primary">Go Shopping</a>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-layout">
+    <div class="cart-items">
+      <div *ngFor="let item of cartItems" class="cart-item card glass">
+        <img [src]="item.book.imageUrl || 'assets/placeholder.jpg'" alt="{{ item.book.title }}">
+        <div class="item-info">
+          <h3>{{ item.book.title }}</h3>
+          <p class="author">{{ item.book.author }}</p>
+          <p class="price">{{ item.book.price | currency:'INR' }}</p>
+        </div>
+        <div class="item-actions">
+          <div class="qty-selector">
+            <button (click)="updateQuantity(item.id, item.quantity - 1)" class="qty-btn">-</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="updateQuantity(item.id, item.quantity + 1)" class="qty-btn">+</button>
+          </div>
+          <button (click)="removeItem(item.id)" class="remove-btn">Remove</button>
+        </div>
+        <div class="item-total">
+          {{ (item.book.price * item.quantity) | currency:'INR' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-summary card glass">
+      <h3>Order Summary</h3>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>{{ total | currency:'INR' }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>Free</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ total | currency:'INR' }}</span>
+      </div>
+      <button (click)="checkout()" class="btn btn-primary w-100">Proceed to Checkout</button>
+    </div>
+  </div>
+</div>

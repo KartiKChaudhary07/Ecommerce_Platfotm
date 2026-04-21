@@ -1,0 +1,116 @@
+<div class="container admin-container">
+  <h1>Admin <span class="gradient-text">Dashboard</span></h1>
+
+  <div class="admin-tabs">
+    <button (click)="activeTab = 'books'" [class.active]="activeTab === 'books'">Manage Books</button>
+    <button (click)="activeTab = 'orders'" [class.active]="activeTab === 'orders'">Manage Orders</button>
+    <button (click)="activeTab = 'add-book'" [class.active]="activeTab === 'add-book'">Add New Book</button>
+  </div>
+
+  <div *ngIf="activeTab === 'books'" class="admin-content card glass">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.id }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.price | currency:'INR' }}</td>
+          <td>{{ book.stockQuantity }}</td>
+          <td>
+            <button (click)="deleteBook(book.id)" class="btn-text delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="activeTab === 'orders'" class="admin-content card glass">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>#{{ order.id }}</td>
+          <td>{{ order.user.username }}</td>
+          <td>{{ order.totalAmount | currency:'INR' }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <select (change)="updateOrderStatus(order.id, $any($event.target).value)">
+              <option [value]="order.status">Change status...</option>
+              <option value="CONFIRMED">CONFIRMED</option>
+              <option value="DISPATCHED">DISPATCHED</option>
+              <option value="DELIVERED">DELIVERED</option>
+              <option value="CANCELLED">CANCELLED</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="activeTab === 'add-book'" class="admin-content card glass">
+    <h3>Add New Book to Collection</h3>
+    <form (ngSubmit)="addBook()">
+      <div class="form-row">
+        <div class="form-group col">
+          <label>Title</label>
+          <input type="text" [(ngModel)]="newBook.title" name="title" required>
+        </div>
+        <div class="form-group col">
+          <label>Author</label>
+          <input type="text" [(ngModel)]="newBook.author" name="author" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col">
+          <label>ISBN</label>
+          <input type="text" [(ngModel)]="newBook.isbn" name="isbn" required>
+        </div>
+        <div class="form-group col">
+          <label>Genre</label>
+          <input type="text" [(ngModel)]="newBook.genre" name="genre" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col">
+          <label>Price</label>
+          <input type="number" [(ngModel)]="newBook.price" name="price" required>
+        </div>
+        <div class="form-group col">
+          <label>Stock</label>
+          <input type="number" [(ngModel)]="newBook.stockQuantity" name="stock" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" [(ngModel)]="newBook.imageUrl" name="image">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="newBook.description" name="desc" rows="4"></textarea>
+      </div>
+      <div class="form-group checkbox">
+        <input type="checkbox" [(ngModel)]="newBook.featured" name="featured" id="featured">
+        <label for="featured">Mark as Featured</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Book</button>
+    </form>
+  </div>
+</div>

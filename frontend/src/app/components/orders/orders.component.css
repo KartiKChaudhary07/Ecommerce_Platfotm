@@ -1,0 +1,119 @@
+.orders-container {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.orders-container h1 {
+  margin-bottom: 3rem;
+}
+
+.order-card {
+  margin-bottom: 2rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-id {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.order-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  padding: 0.25rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.placed { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+.status-badge.confirmed { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.status-badge.dispatched { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.status-badge.delivered { background: rgba(16, 185, 129, 0.3); color: #10b981; }
+
+.order-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 2rem;
+  gap: 3rem;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.order-item img {
+  width: 50px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.item-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-weight: 600;
+}
+
+.item-meta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.order-shipping h4 {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.order-shipping p {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.order-footer {
+  padding: 1.5rem 2rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+}
+
+.total-label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.total-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}

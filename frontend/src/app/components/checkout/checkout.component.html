@@ -1,0 +1,41 @@
+<div class="container checkout-container">
+  <h1>Checkout</h1>
+
+  <div class="checkout-layout">
+    <div class="checkout-form card glass">
+      <h3>Shipping Information</h3>
+      <div class="form-group">
+        <label for="address">Full Shipping Address</label>
+        <textarea name="address" [(ngModel)]="shippingAddress" rows="4" placeholder="Enter your full address with city and pincode"></textarea>
+      </div>
+
+      <h3>Payment Method</h3>
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="payment" value="COD" [(ngModel)]="paymentMethod">
+          <span class="option-card">
+            <strong>Cash on Delivery</strong>
+            <p>Pay when you receive the book</p>
+          </span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="payment" value="WALLET" [(ngModel)]="paymentMethod">
+          <span class="option-card">
+            <strong>BookNest Wallet</strong>
+            <p>Pay using your wallet balance</p>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="order-summary card glass">
+      <h3>Review Your Order</h3>
+      <div class="summary-row total">
+        <span>Amount Payable</span>
+        <span>{{ total | currency:'INR' }}</span>
+      </div>
+      <button (click)="placeOrder()" class="btn btn-primary w-100">Place Order</button>
+      <p class="terms">By placing this order, you agree to our Terms & Conditions.</p>
+    </div>
+  </div>
+</div>

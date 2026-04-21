@@ -1,0 +1,27 @@
+<nav class="navbar glass">
+  <div class="container nav-content">
+    <a routerLink="/" class="logo">BookNest</a>
+    
+    <div class="nav-links">
+      <a routerLink="/" class="nav-item">Home</a>
+      <a routerLink="/about" class="nav-item">About</a>
+      <a *ngIf="isLoggedIn" routerLink="/wishlist" class="nav-item">Wishlist</a>
+      <a routerLink="/cart" class="nav-item cart-link">
+        Cart <span *ngIf="cartCount > 0" class="badge">{{ cartCount }}</span>
+      </a>
+      <a *ngIf="isLoggedIn" routerLink="/orders" class="nav-item">Orders</a>
+      <a *ngIf="isAdmin" routerLink="/admin" class="nav-item">Admin</a>
+    </div>
+
+    <div class="auth-buttons">
+      <ng-container *ngIf="!isLoggedIn; else userMenu">
+        <a routerLink="/login" class="nav-item">Login</a>
+        <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+      </ng-container>
+      <ng-template #userMenu>
+        <span class="user-name">Hello, {{ username }}</span>
+        <button (click)="logout()" class="btn btn-secondary">Logout</button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

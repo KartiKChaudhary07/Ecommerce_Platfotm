@@ -1,0 +1,41 @@
+<div class="container detail-container">
+  <div *ngIf="loading" class="loading">Loading book details...</div>
+
+  <div *ngIf="book" class="book-detail card glass">
+    <div class="detail-grid">
+      <div class="book-image-section">
+        <img [src]="book.imageUrl || 'assets/placeholder.jpg'" alt="{{ book.title }}">
+      </div>
+      
+      <div class="book-info-section">
+        <p class="genre">{{ book.genre }}</p>
+        <h1>{{ book.title }}</h1>
+        <p class="author">By {{ book.author }}</p>
+        
+        <div class="price-tag">
+          {{ book.price | currency:'INR' }}
+        </div>
+
+        <div class="description">
+          <h3>Description</h3>
+          <p>{{ book.description }}</p>
+        </div>
+
+        <div class="actions" *ngIf="isLoggedIn; else loginPrompt">
+          <div class="qty-selector">
+            <button (click)="decreaseQty()" class="qty-btn">-</button>
+            <span>{{ quantity }}</span>
+            <button (click)="increaseQty()" class="qty-btn">+</button>
+          </div>
+          <button (click)="addToCart()" class="btn btn-primary add-btn">Add to Cart</button>
+        </div>
+        
+        <ng-template #loginPrompt>
+          <div class="login-prompt card">
+            <p>Please <a routerLink="/login">Login</a> to add items to your cart.</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

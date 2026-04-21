@@ -1,0 +1,59 @@
+<section class="hero container glass">
+  <h1>Welcome to <span class="gradient-text">BookNest</span></h1>
+  <p>Discover your next favorite story in our curated nest of books.</p>
+</section>
+
+<section class="books-section container">
+  <div class="section-header">
+    <h2>Featured Books</h2>
+  </div>
+  
+  <div class="books-grid">
+    <div *ngFor="let book of featuredBooks" class="book-card card">
+      <img [src]="book.imageUrl || 'assets/placeholder.jpg'" alt="{{ book.title }}" class="book-img">
+      <div class="book-info">
+        <h3>{{ book.title }}</h3>
+        <p class="author">{{ book.author }}</p>
+        <p class="price">{{ book.price | currency:'INR' }}</p>
+        <div class="card-actions">
+          <button [routerLink]="['/book', book.id]" class="btn btn-secondary btn-sm">Details</button>
+          <button (click)="quickAddToCart(book.id)" class="btn btn-primary btn-sm">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="books-section container">
+  <div class="section-header">
+    <h2>All Books</h2>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading books...</div>
+
+  <div class="books-grid">
+    <div *ngFor="let book of books" class="book-card card">
+      <img [src]="book.imageUrl || 'assets/placeholder.jpg'" alt="{{ book.title }}" class="book-img">
+      <div class="book-info">
+        <h3>{{ book.title }}</h3>
+        <p class="author">{{ book.author }}</p>
+        <p class="price">{{ book.price | currency:'INR' }}</p>
+        <div class="card-actions">
+          <button [routerLink]="['/book', book.id]" class="btn btn-secondary btn-sm">Details</button>
+          <button (click)="quickAddToCart(book.id)" class="btn btn-primary btn-sm">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter container glass">
+  <div class="newsletter-content">
+    <h2>Join the <span class="gradient-text">Nest</span></h2>
+    <p>Stay updated with our latest collections and exclusive offers.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Enter your email address">
+      <button class="btn btn-primary">Subscribe</button>
+    </div>
+  </div>
+</section>

@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.Customizer;
 
 @Configuration
 @EnableMethodSecurity
@@ -59,7 +60,11 @@ public class WebSecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth ->
             auth.requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/login/**", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
+        )
+        .oauth2Login(oauth2 -> oauth2
+            .defaultSuccessUrl("/api/v1/auth/oauth2/success", true)
         );
 
     http.authenticationProvider(authenticationProvider());

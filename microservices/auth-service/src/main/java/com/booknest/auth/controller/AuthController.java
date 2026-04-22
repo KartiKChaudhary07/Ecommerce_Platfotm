@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,5 +85,36 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok("User registered successfully!");
+  }
+
+  @GetMapping("/oauth2/success")
+  public ResponseEntity<?> googleLoginSuccess(Authentication authentication) {
+    OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+    String email = oauth2User.getAttribute("email");
+    String name = oauth2User.getAttribute("name");
+    
+    User user = userRepository.findByUsername(email)
+        .orElseGet(() -> {
+            User newUser = new User();
+            newUser.setUsername(email);
+            newUser.setEmail(email);
+            newUser.setPassword(encoder.encode("OAUTH2_PASSWORD")); // Placeholder
+            newUser.setFirstName(name);
+            newUser.setRole(Role.CUSTOMER);
+            return userRepository.save(newUser);
+        });
+
+    // Generate JWT for the Google user
+    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+        UserDetailsImpl.build(user), null, UserDetailsImpl.build(user).getAuthorities());
+    
+    String jwt = jwtUtils.generateJwtToken(authToken);
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("token", jwt);
+    response.put("username", user.getUsername());
+    response.put("role", user.getRole().name());
+
+    return ResponseEntity.ok(response);
   }
 }
